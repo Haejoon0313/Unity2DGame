@@ -2,7 +2,8 @@
 
 public class PlayerMove : MonoBehaviour
 {
-    float maxSpeed = 3.5f;
+    float maxSpeed = 4.5f;
+    float jumpPower = 25;
     Rigidbody2D rigid;
     Animator anim;
 
@@ -16,6 +17,13 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Jump
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
+        {
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("isJumping", true);
+        }
+
         // Stop Speed
         if (Input.GetButtonUp("Horizontal"))
         {
@@ -23,10 +31,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         //  Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
-        {
-            anim.SetFloat("Facing", Input.GetAxisRaw("Horizontal"));
-        }
+        anim.SetFloat("Facing", rigid.velocity.normalized.x);
 
         // Player Moving
         if(Mathf.Abs(rigid.velocity.x) < 0.2)
@@ -37,7 +42,6 @@ public class PlayerMove : MonoBehaviour
         {
             anim.SetBool("isWalking", true);
         }
-        anim.SetFloat("WalkingDirection", rigid.velocity.normalized.x);
         
     }
 
@@ -52,5 +56,20 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
         if (rigid.velocity.x < maxSpeed*(-1)) // Let Max
             rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
+
+        // Landing Platform
+        if(rigid.velocity.y < 0)
+        {
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 1.6f)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+            }
+        }
+        
+
     }
 }
