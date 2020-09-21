@@ -71,12 +71,10 @@ public class PlayerMove : MonoBehaviour
                     anim.SetBool("isJumping", false);
                 }
             }
-        }
-        
-        // Falling
-        if(rigid.position.y < -1.5f)
-        {
-            anim.SetBool("isJumping", true);
+            else
+            {
+                anim.SetBool("isJumping", true);
+            }
         }
 
     }
