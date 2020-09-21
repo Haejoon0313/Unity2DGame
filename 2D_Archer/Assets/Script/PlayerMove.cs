@@ -4,6 +4,7 @@ public class PlayerMove : MonoBehaviour
 {
     float maxSpeed = 12;
     float jumpPower = 50;
+    float speedBoost = 350;
     Rigidbody2D rigid;
     Animator anim;
 
@@ -49,7 +50,7 @@ public class PlayerMove : MonoBehaviour
         // Moving Speed
         float h = Input.GetAxisRaw("Horizontal");
 
-        rigid.AddForce(Vector2.right * h * 50 *Time.deltaTime, ForceMode2D.Impulse);
+        rigid.velocity = new Vector2(h * speedBoost * Time.deltaTime, rigid.velocity.y);
         Debug.Log(h);
 
         if (rigid.velocity.x > maxSpeed) // Right Max
@@ -73,6 +74,11 @@ public class PlayerMove : MonoBehaviour
             }
         }
         
+        // Falling
+        if(rigid.position.y < -1.5f)
+        {
+            anim.SetBool("isJumping", true);
+        }
 
     }
 }
