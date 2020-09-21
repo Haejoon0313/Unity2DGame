@@ -51,7 +51,6 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
 
         rigid.velocity = new Vector2(h * speedBoost * Time.deltaTime, rigid.velocity.y);
-        Debug.Log(h);
 
         if (rigid.velocity.x > maxSpeed) // Right Max
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);

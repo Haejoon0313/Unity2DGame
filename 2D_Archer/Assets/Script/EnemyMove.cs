@@ -3,16 +3,13 @@
 public class EnemyMove : MonoBehaviour
 {
     float maxSpeed = 12;
-    float jumpPower = 50;
-    float speedBoost = 350;
-    int cnt;
+    float speedBoost = -350;
     Rigidbody2D rigid;
     Animator anim;
 
     // Start is called before the first frame update
     void Awake()
     {
-        cnt = 100;
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -20,12 +17,6 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*// Jump
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
-        {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            anim.SetBool("isJumping", true);
-        }*/
 
         // Stop Speed
         if (Input.GetButtonUp("Horizontal"))
@@ -60,24 +51,17 @@ public class EnemyMove : MonoBehaviour
         //  Direction Sprite
         anim.SetFloat("Facing", rigid.velocity.x);
 
-        // Landing Platform
-        if (rigid.velocity.y < 0)
+        // Platform Check
+        Vector2 frontVec = new Vector2(rigid.position.x + (speedBoost / 250f), rigid.position.y);
+        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down * 2,2, LayerMask.GetMask("Platform"));
+        if (rayHit.collider == null)
         {
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
-            if (rayHit.collider != null)
-            {
-                if (rayHit.distance < 1.6f)
-                {
-                    anim.SetBool("isJumping", false);
-                }
-            }
+            Turn();
         }
+    }
 
-        if(cnt > 30)
-        {
-            speedBoost *= -1;
-            cnt = 0;
-        }
-        cnt++;
+    void Turn()
+    {
+        speedBoost *= -1;
     }
 }
