@@ -2,8 +2,8 @@
 
 public class PlayerMove : MonoBehaviour
 {
-    float maxSpeed = 4.5f;
-    float jumpPower = 25;
+    float maxSpeed = 12;
+    float jumpPower = 50;
     Rigidbody2D rigid;
     Animator anim;
 
@@ -30,8 +30,7 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.normalized.x* 0.2f, rigid.velocity.y);
         }
 
-        //  Direction Sprite
-        anim.SetFloat("Facing", rigid.velocity.normalized.x);
+        
 
         // Player Moving
         if(Mathf.Abs(rigid.velocity.x) < 0.2)
@@ -50,15 +49,19 @@ public class PlayerMove : MonoBehaviour
         // Moving Speed
         float h = Input.GetAxisRaw("Horizontal");
 
-        rigid.AddForce(Vector2.right * h * 8f *Time.deltaTime, ForceMode2D.Impulse);
+        rigid.AddForce(Vector2.right * h * 50 *Time.deltaTime, ForceMode2D.Impulse);
+        Debug.Log(h);
 
         if (rigid.velocity.x > maxSpeed) // Right Max
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        if (rigid.velocity.x < maxSpeed*(-1)) // Let Max
+        if (rigid.velocity.x < maxSpeed*(-1)) // Left Max
             rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
 
+        //  Direction Sprite
+        anim.SetFloat("Facing", h);
+
         // Landing Platform
-        if(rigid.velocity.y < 0)
+        if (rigid.velocity.y < 0)
         {
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
             if (rayHit.collider != null)
