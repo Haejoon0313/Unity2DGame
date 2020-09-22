@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.Timeline;
+using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
     float maxSpeed = 12;
     float jumpPower = 50;
     float speedBoost = 350;
+    bool controlDisabled = false;
+    
     Rigidbody2D rigid;
     Animator anim;
+    SpriteRenderer ren;
 
     // Start is called before the first frame update
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        ren = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -31,10 +37,15 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.normalized.x* 0.2f, rigid.velocity.y);
         }
 
-        
+        // Attack
+        if (Input.GetButtonDown("Fire1") && !anim.GetBool("isAttacking"))
+        {
+            playerAttack();
+            anim.SetBool("isAttacking", true);
+        }
 
         // Player Moving
-        if(Mathf.Abs(rigid.velocity.x) < 0.2)
+        if (Mathf.Abs(rigid.velocity.x) < 0.2)
         {
             anim.SetBool("isWalking", false);
         }
@@ -49,8 +60,11 @@ public class PlayerMove : MonoBehaviour
     {
         // Moving Speed
         float h = Input.GetAxisRaw("Horizontal");
-
-        rigid.velocity = new Vector2(h * speedBoost * Time.deltaTime, rigid.velocity.y);
+        Debug.Log(h);
+        if (!controlDisabled)
+        {
+            rigid.AddForce(new Vector2(h * speedBoost * Time.deltaTime, 0), ForceMode2D.Impulse);
+        }
 
         if (rigid.velocity.x > maxSpeed) // Right Max
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
@@ -76,6 +90,53 @@ public class PlayerMove : MonoBehaviour
                 anim.SetBool("isJumping", true);
             }
         }
+    }
+
+    void playerAttack()
+    {
+        
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            onDamaged(collision.transform.position);
+        }
+    }
+
+    void onDamaged(Vector2 targetPos)
+    {
+        // immortal active
+        gameObject.layer = 10;
+
+        // view alpha
+        ren.color = new Color(1f, 0.1f, 0.1f, 1);
+
+        // damaged reaction
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
+        rigid.AddForce(new Vector2(dirc*50, 25), ForceMode2D.Impulse);
+        
+        // disable control for a while
+        controlDisabled = true;
+
+        Invoke("availableControl", 0.5f);
+        Invoke("offDamaged", 1f);
 
     }
+
+    void offDamaged()
+    {
+        // immortal inactive
+        gameObject.layer = 9;
+        
+        // view normal
+        ren.color = new Color(1, 1, 1, 1);
+    }
+
+    void availableControl()
+    {
+        controlDisabled = false;
+    }
+
 }
