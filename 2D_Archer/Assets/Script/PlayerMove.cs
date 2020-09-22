@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
         Condition();
         Reload();
         Attack();
-
+        UltimateAttack();
     }
 
     void FixedUpdate()
@@ -160,6 +160,36 @@ public class PlayerMove : MonoBehaviour
             arrowren.flipX = true;
         }
         arrowrigid.AddForce(Vector2.right * 20 * speedDirection, ForceMode2D.Impulse);
+
+        Invoke("availableControl", 0.2f);
+    }
+
+    void UltimateAttack()
+    {
+        // Attack
+        if (Input.GetButtonDown("Fire2") && !controlDisabled)
+        {
+            // animation
+            anim.SetTrigger("Shoot");
+            controlDisabled = true;
+
+
+            Invoke("Cast", 0.5f);
+        }
+    }
+    void Cast()
+    {
+        // arrow initialize
+        GameObject arrow = Instantiate(firearrowObj, transform.position, transform.rotation);
+        Rigidbody2D arrowrigid = arrow.GetComponent<Rigidbody2D>();
+        SpriteRenderer arrowren = arrow.GetComponent<SpriteRenderer>();
+
+        // shoot to player facing
+        if (speedDirection < 0)
+        {
+            arrowren.flipX = true;
+        }
+        arrowrigid.AddForce(Vector2.right * 10 * speedDirection, ForceMode2D.Impulse);
 
         Invoke("availableControl", 0.2f);
     }

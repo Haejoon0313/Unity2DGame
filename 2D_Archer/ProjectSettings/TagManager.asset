@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Platform
   - Attack
+  - Ultimate
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - DamagedPlayer
   - Enemy
   - Attack
-  - 
+  - Ultimate
   - 
   - 
   - 
