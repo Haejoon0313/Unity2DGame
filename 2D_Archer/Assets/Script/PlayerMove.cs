@@ -1,14 +1,23 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
+    // Player Variables
     float maxSpeed = 12;
     float jumpPower = 50;
-    float speedBoost = 350;
+    float speedDirection = 1;
     bool controlDisabled = false;
-    
+
+    // Arrow Variables
+    public GameObject arrowObj;
+    public GameObject firearrowObj;
+    float curShotDelay;
+    float maxShotDelay = 0.7f;
+
+    // Environment
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
@@ -24,55 +33,44 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Jump
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
-        {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            anim.SetBool("isJumping", true);
-        }
+        Jump();
+        Condition();
+        Reload();
+        Attack();
 
-        // Stop Speed
-        if (Input.GetButtonUp("Horizontal"))
-        {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x* 0.2f, rigid.velocity.y);
-        }
-
-        // Attack
-        if (Input.GetButtonDown("Fire1") && !anim.GetBool("isAttacking"))
-        {
-            playerAttack();
-            anim.SetBool("isAttacking", true);
-        }
-
-        // Player Moving
-        if (Mathf.Abs(rigid.velocity.x) < 0.2)
-        {
-            anim.SetBool("isWalking", false);
-        }
-        else
-        {
-            anim.SetBool("isWalking", true);
-        }
-        
     }
 
     void FixedUpdate()
     {
+        Move();
+    }
+
+    void Move()
+    {
         // Moving Speed
         float h = Input.GetAxisRaw("Horizontal");
-        Debug.Log(h);
+
+        // If damaged, player control impossible
         if (!controlDisabled)
         {
-            rigid.AddForce(new Vector2(h * speedBoost * Time.deltaTime, 0), ForceMode2D.Impulse);
+            rigid.AddForce(new Vector2(h * 350* Time.deltaTime, 0), ForceMode2D.Impulse);
         }
 
         if (rigid.velocity.x > maxSpeed) // Right Max
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        if (rigid.velocity.x < maxSpeed*(-1)) // Left Max
-            rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
+        if (rigid.velocity.x < maxSpeed * (-1)) // Left Max
+            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
 
         //  Direction Sprite
-        anim.SetFloat("Facing", h);
+        if (h > 0)
+        {
+            speedDirection = 1;
+        }
+        else if(h < 0)
+        {
+            speedDirection = -1;
+        }
+        anim.SetFloat("Facing", speedDirection);
 
         // Landing Platform
         if (rigid.velocity.y < 0)
@@ -92,9 +90,78 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void playerAttack()
+    void Condition()
     {
-        
+        // Stop Speed
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.2f, rigid.velocity.y);
+        }
+
+        // Player Moving Check
+        if (Mathf.Abs(rigid.velocity.x) < 0.2)
+        {
+            anim.SetBool("isWalking", false);
+        }
+        else
+        {
+            anim.SetBool("isWalking", true);
+        }
+    }
+
+    void Jump()
+    {
+        // Jump
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping") && !controlDisabled)
+        {
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("isJumping", true);
+        }
+    }
+
+    void Reload()
+    {
+        curShotDelay += Time.deltaTime;
+
+    }
+
+    void Attack()
+    {
+        // if reload enough
+        if (curShotDelay < maxShotDelay)
+        {
+            return;
+        }
+
+        // Attack
+        if (Input.GetButton("Fire1") && !controlDisabled)
+        {
+            // animation
+            anim.SetTrigger("Shoot");
+            controlDisabled = true;
+
+            // make delay zero
+            curShotDelay = 0;
+
+            Invoke("Shoot", 0.5f);
+        }
+    }
+
+    void Shoot()
+    {
+        // arrow initialize
+        GameObject arrow = Instantiate(arrowObj, transform.position, transform.rotation);
+        Rigidbody2D arrowrigid = arrow.GetComponent<Rigidbody2D>();
+        SpriteRenderer arrowren = arrow.GetComponent<SpriteRenderer>();
+
+        // shoot to player facing
+        if (speedDirection < 0)
+        {
+            arrowren.flipX = true;
+        }
+        arrowrigid.AddForce(Vector2.right * 20 * speedDirection, ForceMode2D.Impulse);
+
+        Invoke("availableControl", 0.2f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
