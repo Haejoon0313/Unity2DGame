@@ -6,9 +6,11 @@ TagManager:
   tags:
   - Platform
   - Attack
-  - Ultimate
   - Enemy
   - Item
+  - Ultimate
+  - Background
+  - Border
   layers:
   - Default
   - TransparentFX

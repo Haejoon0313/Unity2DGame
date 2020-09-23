@@ -130,8 +130,10 @@ public class PlayerMove : MonoBehaviour
 
     void Reload()
     {
+        // Normal Attack Delay
         curShotDelay += Time.deltaTime;
 
+        // Store Ultimate Attack until 3
         if(curChargeNum < maxChargeNum)
         {
             curChargeTime += Time.deltaTime;
@@ -185,14 +187,16 @@ public class PlayerMove : MonoBehaviour
 
     void UltimateAttack()
     {
+        // if ultimate chance exist
+        if (curChargeNum <= 0)
+        {
+            return;
+        }
 
         // Attack
         if (Input.GetButtonDown("Fire2") && !controlDisabled)
         {
-            if(curChargeNum <= 0)
-            {
-                return;
-            }
+            
 
             // animation
             anim.SetTrigger("Shoot");
@@ -234,8 +238,11 @@ public class PlayerMove : MonoBehaviour
     {
         if(collision.gameObject.tag == "Item")
         {
-            // Get Point
-            gameManager.stagePoint += 100;
+            // Coin: Get Point
+            gameManager.stagePoint += 1;
+
+            // Heart: Get Health
+
 
             // Item inactive
             collision.gameObject.SetActive(false);
@@ -243,7 +250,16 @@ public class PlayerMove : MonoBehaviour
         else if (collision.gameObject.tag == "Finish")
         {
             // Next Stage
+            Debug.Log("Next Stage");
+        }
+        else if (collision.gameObject.tag == "Border")
+        {
+            // disable control for a while
+            controlDisabled = true;
 
+            // call die func
+            Die();
+            return;
         }
     }
 
@@ -259,8 +275,8 @@ public class PlayerMove : MonoBehaviour
         gameManager.playerHealth -= dmg;
         if (gameManager.playerHealth <= 0)
         {
-            anim.SetTrigger("Die");
-            Invoke("Die", 2);
+            // call die func
+            Die();
             return;
         }
 
@@ -292,9 +308,28 @@ public class PlayerMove : MonoBehaviour
 
     void Die()
     {
+        // stop move
+        CancelInvoke();
+        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        
+        // dying anim
+        anim.SetTrigger("Die");
+
+        // revive
+        Invoke("Revive", 2);
+    }
+
+    void Revive()
+    {
+        // put init pos
         gameObject.transform.position = new Vector2(-5.37f, 18f);
+
+        // immortal inactive
         gameObject.layer = 9;
         gameManager.playerHealth = 3;
+
+        // start move
+        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         Invoke("availableControl", 1.5f);
     }
 
