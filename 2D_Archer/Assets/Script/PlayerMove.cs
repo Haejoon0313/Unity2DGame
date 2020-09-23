@@ -226,6 +226,20 @@ public class PlayerMove : MonoBehaviour
             onDamaged(collision.transform.position, 1);
         }
     }
+    
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Item")
+        {
+            // Item inactive
+            collision.gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.tag == "Finish")
+        {
+            // Next Stage
+
+        }
+    }
 
     void onDamaged(Vector2 targetPos, int dmg)
     {

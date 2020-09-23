@@ -5,7 +5,11 @@ public class MeleeEnemyMove : MonoBehaviour
     // Enemy Variables
     int speedDirection = 1;
     int ThinkTime = 2;
-    int health = 3;
+    public int health = 3;
+
+    // Enemy Eyes
+    Vector2 checkVec;
+    RaycastHit2D rayHit;
 
     // Environment
     Rigidbody2D rigid;
@@ -52,19 +56,21 @@ public class MeleeEnemyMove : MonoBehaviour
         anim.SetFloat("Facing", rigid.velocity.x);
 
         // Cliff Check
-        Vector2 frontVec = new Vector2(rigid.position.x + speedDirection, rigid.position.y);
-        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
+        checkVec = new Vector2(rigid.position.x + speedDirection, rigid.position.y);
+        rayHit = Physics2D.Raycast(checkVec, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
         if (rayHit.collider == null)
         {
             Turn();
         }
 
         // Wall Check
-        rayHit = Physics2D.Raycast(rigid.position, Vector3.right * speedDirection, 2, LayerMask.GetMask("Platform"));
+        checkVec = new Vector2(rigid.position.x + speedDirection, rigid.position.y);
+        rayHit = Physics2D.Raycast(checkVec, Vector3.up, 1, LayerMask.GetMask("Platform"));
         if (rayHit.collider != null)
         {
             Turn();
         }
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
