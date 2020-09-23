@@ -9,13 +9,19 @@ public class PlayerMove : MonoBehaviour
     float maxSpeed = 12;
     float jumpPower = 50;
     float speedDirection = 1;
+    float shootDirection = 1;
     bool controlDisabled = false;
+    int health = 3;
 
     // Arrow Variables
     public GameObject arrowObj;
     public GameObject firearrowObj;
-    float curShotDelay;
+    float curShotDelay = 0;
     float maxShotDelay = 0.7f;
+    float curChargeTime = 0;
+    float maxChargeTime = 10f;
+    int curChargeNum = 3;
+    int maxChargeNum = 3;
 
     // Environment
     Rigidbody2D rigid;
@@ -123,6 +129,15 @@ public class PlayerMove : MonoBehaviour
     {
         curShotDelay += Time.deltaTime;
 
+        if(curChargeNum < maxChargeNum)
+        {
+            curChargeTime += Time.deltaTime;
+        }
+        if(curChargeTime >= maxChargeTime)
+        {
+            curChargeNum++;
+            curChargeTime = 0;
+        }
     }
 
     void Attack()
@@ -134,10 +149,11 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Attack
-        if (Input.GetButton("Fire1") && !controlDisabled)
+        if (Input.GetButtonDown("Fire1") && !controlDisabled)
         {
             // animation
             anim.SetTrigger("Shoot");
+            shootDirection = speedDirection;
             controlDisabled = true;
 
             // make delay zero
@@ -155,24 +171,33 @@ public class PlayerMove : MonoBehaviour
         SpriteRenderer arrowren = arrow.GetComponent<SpriteRenderer>();
 
         // shoot to player facing
-        if (speedDirection < 0)
+        if (shootDirection < 0)
         {
             arrowren.flipX = true;
         }
-        arrowrigid.AddForce(Vector2.right * 20 * speedDirection, ForceMode2D.Impulse);
+        arrowrigid.AddForce(Vector2.right * 20 * shootDirection, ForceMode2D.Impulse);
 
         Invoke("availableControl", 0.2f);
     }
 
     void UltimateAttack()
     {
+
         // Attack
         if (Input.GetButtonDown("Fire2") && !controlDisabled)
         {
+            if(curChargeNum <= 0)
+            {
+                return;
+            }
+
             // animation
             anim.SetTrigger("Shoot");
+            shootDirection = speedDirection;
             controlDisabled = true;
 
+            // use charging ultimate
+            curChargeNum--;
 
             Invoke("Cast", 0.5f);
         }
@@ -185,11 +210,11 @@ public class PlayerMove : MonoBehaviour
         SpriteRenderer arrowren = arrow.GetComponent<SpriteRenderer>();
 
         // shoot to player facing
-        if (speedDirection < 0)
+        if (shootDirection < 0)
         {
             arrowren.flipX = true;
         }
-        arrowrigid.AddForce(Vector2.right * 10 * speedDirection, ForceMode2D.Impulse);
+        arrowrigid.AddForce(Vector2.right * 10 * shootDirection, ForceMode2D.Impulse);
 
         Invoke("availableControl", 0.2f);
     }
@@ -198,11 +223,11 @@ public class PlayerMove : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            onDamaged(collision.transform.position);
+            onDamaged(collision.transform.position, 1);
         }
     }
 
-    void onDamaged(Vector2 targetPos)
+    void onDamaged(Vector2 targetPos, int dmg)
     {
         // immortal active
         gameObject.layer = 10;
@@ -217,9 +242,20 @@ public class PlayerMove : MonoBehaviour
         // disable control for a while
         controlDisabled = true;
 
+        // health calculation
+        int remain = health - dmg;
+        if (remain <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            health = remain;
+        }
+
+        // go to normal state
         Invoke("availableControl", 0.5f);
         Invoke("offDamaged", 1f);
-
     }
 
     void offDamaged()
@@ -234,6 +270,11 @@ public class PlayerMove : MonoBehaviour
     void availableControl()
     {
         controlDisabled = false;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 
 }

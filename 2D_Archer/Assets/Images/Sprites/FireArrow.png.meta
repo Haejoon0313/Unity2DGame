@@ -1,7 +1,67 @@
 fileFormatVersion: 2
 guid: 7ea227366b2eda84d9d6cc58fa20f31f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 32601713878340476
+    second: FireArrow_0
+  - first:
+      213: -5350353268336977582
+    second: FireArrow_1
+  - first:
+      213: 7620252739553468264
+    second: FireArrow_2
+  - first:
+      213: 7507721775238963328
+    second: FireArrow_3
+  - first:
+      213: 7217918844734804829
+    second: FireArrow_4
+  - first:
+      213: -6698028640178880273
+    second: FireArrow_5
+  - first:
+      213: -4590410700199342611
+    second: FireArrow_6
+  - first:
+      213: 9083893073455472649
+    second: FireArrow_7
+  - first:
+      213: 8347628847777828362
+    second: FireArrow_8
+  - first:
+      213: -3501081010153673596
+    second: FireArrow_9
+  - first:
+      213: 8761480126457761466
+    second: FireArrow_0
+  - first:
+      213: -1940310832188247449
+    second: FireArrow_1
+  - first:
+      213: -4928043614279162033
+    second: FireArrow_2
+  - first:
+      213: 4300414463923999058
+    second: FireArrow_3
+  - first:
+      213: 5906729975641552930
+    second: FireArrow_4
+  - first:
+      213: -302050007980267730
+    second: FireArrow_5
+  - first:
+      213: 6797669011716420467
+    second: FireArrow_6
+  - first:
+      213: 4194922640652743908
+    second: FireArrow_7
+  - first:
+      213: 1332231729347269101
+    second: FireArrow_8
+  - first:
+      213: -9126531261660356146
+    second: FireArrow_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +100,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -109,7 +169,217 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: FireArrow_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abec82431c7079970800000000000000
+      internalID: 8761480126457761466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 762b39d0491a215e0800000000000000
+      internalID: -1940310832188247449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f47224551721c9bb0800000000000000
+      internalID: -4928043614279162033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_3
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251542d9b242eab30800000000000000
+      internalID: 4300414463923999058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_4
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 228344e1e9be8f150800000000000000
+      internalID: 5906729975641552930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_5
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e27aee93e17eecbf0800000000000000
+      internalID: -302050007980267730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_6
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 373b90853fb265e50800000000000000
+      internalID: 6797669011716420467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_7
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4b9508aeb573a30800000000000000
+      internalID: 4194922640652743908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_8
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de19f3a03b90d7210800000000000000
+      internalID: 1332231729347269101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireArrow_9
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 0
+        width: 45
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec1ac350c2c085180800000000000000
+      internalID: -9126531261660356146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
