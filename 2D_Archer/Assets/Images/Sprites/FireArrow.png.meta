@@ -174,9 +174,9 @@ TextureImporter:
       name: FireArrow_0
       rect:
         serializedVersion: 2
-        x: 13
+        x: 8
         y: 0
-        width: 45
+        width: 46
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -195,9 +195,9 @@ TextureImporter:
       name: FireArrow_1
       rect:
         serializedVersion: 2
-        x: 83
+        x: 65
         y: 0
-        width: 45
+        width: 48
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -216,9 +216,9 @@ TextureImporter:
       name: FireArrow_2
       rect:
         serializedVersion: 2
-        x: 143
+        x: 139
         y: 0
-        width: 45
+        width: 46
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -237,9 +237,9 @@ TextureImporter:
       name: FireArrow_3
       rect:
         serializedVersion: 2
-        x: 211
+        x: 203
         y: 0
-        width: 45
+        width: 48
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -258,9 +258,9 @@ TextureImporter:
       name: FireArrow_4
       rect:
         serializedVersion: 2
-        x: 279
+        x: 266
         y: 0
-        width: 45
+        width: 47
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -279,9 +279,9 @@ TextureImporter:
       name: FireArrow_5
       rect:
         serializedVersion: 2
-        x: 337
+        x: 336
         y: 0
-        width: 45
+        width: 46
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -300,9 +300,9 @@ TextureImporter:
       name: FireArrow_6
       rect:
         serializedVersion: 2
-        x: 397
+        x: 396
         y: 0
-        width: 45
+        width: 48
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -321,9 +321,9 @@ TextureImporter:
       name: FireArrow_7
       rect:
         serializedVersion: 2
-        x: 466
+        x: 455
         y: 0
-        width: 45
+        width: 46
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -342,9 +342,9 @@ TextureImporter:
       name: FireArrow_8
       rect:
         serializedVersion: 2
-        x: 531
+        x: 512
         y: 0
-        width: 45
+        width: 46
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -363,9 +363,9 @@ TextureImporter:
       name: FireArrow_9
       rect:
         serializedVersion: 2
-        x: 590
+        x: 583
         y: 0
-        width: 45
+        width: 47
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}

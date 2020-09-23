@@ -112,7 +112,7 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 811, y: 492}
+  m_MinSize: {x: 811, y: 471}
   m_MaxSize: {x: 22006, y: 14042}
   vertical: 0
   controlID: 190
@@ -137,10 +137,10 @@ MonoBehaviour:
     y: 0
     width: 1531
     height: 947
-  m_MinSize: {x: 535, y: 492}
+  m_MinSize: {x: 535, y: 471}
   m_MaxSize: {x: 18005, y: 14042}
   vertical: 1
-  controlID: 63
+  controlID: 121
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -162,10 +162,10 @@ MonoBehaviour:
     y: 0
     width: 1531
     height: 573
-  m_MinSize: {x: 303, y: 221}
-  m_MaxSize: {x: 8003, y: 4021}
+  m_MinSize: {x: 302, y: 200}
+  m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 64
+  controlID: 122
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,8 +185,8 @@ MonoBehaviour:
     y: 0
     width: 276
     height: 573
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_MinSize: {x: 535, y: 271}
   m_MaxSize: {x: 18005, y: 10021}
   vertical: 0
-  controlID: 169
+  controlID: 60
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -471,23 +471,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 963c0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 4cbaffff
+      m_ExpandedIDs: 5efbffff683900008e390000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Enemy (1)
+        m_OriginalName: Enemy (1)
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 14734
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -533,9 +533,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -13.572867, y: 3.173456, z: -51.895607}
+    m_Target: {x: 17.987617, y: -2.714558, z: -56.563545}
     speed: 2
-    m_Value: {x: -13.572867, y: 3.173456, z: -51.895607}
+    m_Value: {x: 17.987617, y: -2.714558, z: -56.563545}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -585,9 +585,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.798926
+    m_Target: 10.185644
     speed: 2
-    m_Value: 10.798926
+    m_Value: 10.185644
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -749,20 +749,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Script
+    - Assets/Images/Sprites
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Script
+  - Assets/Images/Sprites
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\My Documents\PLAY\Practice\Game\Unity2DGame\2D_Archer
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d2440000
-    m_LastClickedID: 17618
-    m_ExpandedIDs: 00000000ac44000000ca9a3b
+    m_SelectedIDs: 823b0000
+    m_LastClickedID: 15234
+    m_ExpandedIDs: 00000000523b0000723b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -790,7 +790,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ac440000
+    m_ExpandedIDs: 00000000523b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -817,8 +817,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c62300003639000070390000a0450000be46000074390000aa390000b63d0000ba3d0000c0390000663f0000d03d0000084c00006c3b00009c390000b43f000000000000ce390000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c62300003639000070390000a0450000be46000074390000aa390000b63d0000ba3d0000c0390000663f0000d03d0000084c00006c3b00009c39000000000000ce3900008c3b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
