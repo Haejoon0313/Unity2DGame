@@ -11,7 +11,6 @@ public class PlayerMove : MonoBehaviour
     float speedDirection = 1;
     float shootDirection = 1;
     bool controlDisabled = false;
-    int health = 3;
 
     // Arrow Variables
     public GameObject arrowObj;
@@ -27,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -76,7 +76,10 @@ public class PlayerMove : MonoBehaviour
         {
             speedDirection = -1;
         }
-        anim.SetFloat("Facing", speedDirection);
+        if (!controlDisabled)
+        {
+            anim.SetFloat("Facing", speedDirection);
+        }
 
         // Landing Platform
         if (rigid.velocity.y < 0)
@@ -231,6 +234,9 @@ public class PlayerMove : MonoBehaviour
     {
         if(collision.gameObject.tag == "Item")
         {
+            // Get Point
+            gameManager.stagePoint += 100;
+
             // Item inactive
             collision.gameObject.SetActive(false);
         }
@@ -246,26 +252,24 @@ public class PlayerMove : MonoBehaviour
         // immortal active
         gameObject.layer = 10;
 
+        // disable control for a while
+        controlDisabled = true;
+
+        // health calculation
+        gameManager.playerHealth -= dmg;
+        if (gameManager.playerHealth <= 0)
+        {
+            anim.SetTrigger("Die");
+            Invoke("Die", 2);
+            return;
+        }
+
         // view alpha
         ren.color = new Color(1f, 0.1f, 0.1f, 1);
 
         // damaged reaction
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
         rigid.AddForce(new Vector2(dirc*50, 25), ForceMode2D.Impulse);
-        
-        // disable control for a while
-        controlDisabled = true;
-
-        // health calculation
-        int remain = health - dmg;
-        if (remain <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            health = remain;
-        }
 
         // go to normal state
         Invoke("availableControl", 0.5f);
@@ -288,7 +292,10 @@ public class PlayerMove : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        gameObject.transform.position = new Vector2(-5.37f, 18f);
+        gameObject.layer = 9;
+        gameManager.playerHealth = 3;
+        Invoke("availableControl", 1.5f);
     }
 
 }

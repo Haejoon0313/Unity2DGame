@@ -2,13 +2,21 @@
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public int totalPoint;
+    public int stagePoint;
+    public int stageIndex;
+
+    public int playerHealth;
+
     void Start()
     {
-        
+        totalPoint = 0;
+        stagePoint = 0;
+        stageIndex = 0;
+
+        playerHealth = 3;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
