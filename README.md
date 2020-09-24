@@ -4,6 +4,7 @@
 
 Title: Archer
 
-Tags: 2D, Quarter-view, Roguelike
+Tags: Fantasy, Platform, 2D
 
-Director: Joon
+Director: jOoN
+
