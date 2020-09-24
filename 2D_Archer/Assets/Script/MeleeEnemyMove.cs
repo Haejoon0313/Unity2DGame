@@ -102,14 +102,10 @@ public class MeleeEnemyMove : MonoBehaviour
         speedDirection = dirc*(-1);
 
         // health calculation
-        int remain = health - dmg;
-        if(remain <= 0)
+        health -= dmg;
+        if(health <= 0)
         {
             Die();
-        }
-        else
-        {
-            health = remain;
         }
 
         // go to normal state

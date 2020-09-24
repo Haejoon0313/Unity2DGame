@@ -2,6 +2,20 @@
 
 public class Arrow : MonoBehaviour
 {
+    float lifetime = 0;
+
+    void Update()
+    {
+        if (gameObject.tag == "Ultimate")
+        {
+            lifetime += Time.deltaTime;
+
+            if(lifetime > 4)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
     void OnBecameInvisible()
     {
         Destroy(gameObject);

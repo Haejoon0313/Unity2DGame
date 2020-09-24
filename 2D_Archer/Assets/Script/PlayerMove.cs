@@ -19,8 +19,8 @@ public class PlayerMove : MonoBehaviour
     float maxShotDelay = 0.7f;
     float curChargeTime = 0;
     float maxChargeTime = 10f;
-    int curChargeNum = 3;
-    int maxChargeNum = 3;
+    int curChargeNum = 0;
+    int maxChargeNum = 2;
 
     // Environment
     Rigidbody2D rigid;
@@ -61,7 +61,7 @@ public class PlayerMove : MonoBehaviour
         // If damaged, player control impossible
         if (!controlDisabled)
         {
-            rigid.AddForce(new Vector2(h * 350* Time.deltaTime, 0), ForceMode2D.Impulse);
+            rigid.AddForce(new Vector2(h * 350 * Time.deltaTime, 0), ForceMode2D.Impulse);
         }
 
         if (rigid.velocity.x > maxSpeed) // Right Max
@@ -74,7 +74,7 @@ public class PlayerMove : MonoBehaviour
         {
             speedDirection = 1;
         }
-        else if(h < 0)
+        else if (h < 0)
         {
             speedDirection = -1;
         }
@@ -136,11 +136,11 @@ public class PlayerMove : MonoBehaviour
         curShotDelay += Time.deltaTime;
 
         // Store Ultimate Attack until 3
-        if(curChargeNum < maxChargeNum)
+        if (curChargeNum < maxChargeNum)
         {
             curChargeTime += Time.deltaTime;
         }
-        if(curChargeTime >= maxChargeTime)
+        if (curChargeTime >= maxChargeTime)
         {
             curChargeNum++;
             curChargeTime = 0;
@@ -198,7 +198,7 @@ public class PlayerMove : MonoBehaviour
         // Attack
         if (Input.GetButtonDown("Fire2") && !controlDisabled)
         {
-            
+
 
             // animation
             anim.SetTrigger("Shoot");
@@ -230,15 +230,29 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.layer == 11)
         {
             onDamaged(collision.transform.position, 1);
         }
+        else if(collision.gameObject.layer == 14)
+        {
+            if (collision.gameObject.name.Contains("Fireball"))
+            {
+                Debug.Log("Fireball Hit");
+                onDamaged(collision.transform.position, 1);
+            }
+
+            else if (collision.gameObject.name.Contains("Bite") || collision.gameObject.name.Contains("Dragon"))
+            {
+                Debug.Log("Bite Hit");
+                onDamaged(collision.transform.position, 2);
+            }
+        }
     }
-    
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Item")
+        if (collision.gameObject.tag == "Item")
         {
             // Coin: Get Point
             if (collision.gameObject.name.Contains("Coin"))
@@ -247,9 +261,9 @@ public class PlayerMove : MonoBehaviour
             }
 
             // Heart: Get Health
-            if (collision.gameObject.name.Contains("Heart"))
+            else if (collision.gameObject.name.Contains("Heart"))
             {
-                if(gameManager.curHP < gameManager.maxHP)
+                if (gameManager.curHP < gameManager.maxHP)
                 {
                     gameManager.curHP += 1;
                 }
@@ -263,6 +277,7 @@ public class PlayerMove : MonoBehaviour
         {
             // Next Stage
             gameManager.NextStage();
+
         }
         else if (collision.gameObject.tag == "Border")
         {
@@ -287,6 +302,9 @@ public class PlayerMove : MonoBehaviour
         gameManager.curHP -= dmg;
         if (gameManager.curHP <= 0)
         {
+            // view normal
+            ren.color = new Color(1, 1, 1, 1);
+
             // call die func
             Die();
             return;
@@ -297,7 +315,7 @@ public class PlayerMove : MonoBehaviour
 
         // damaged reaction
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
-        rigid.AddForce(new Vector2(dirc*50, 25), ForceMode2D.Impulse);
+        rigid.AddForce(new Vector2(dirc * 50, 25), ForceMode2D.Impulse);
 
         // go to normal state
         Invoke("availableControl", 0.5f);
@@ -308,7 +326,7 @@ public class PlayerMove : MonoBehaviour
     {
         // immortal inactive
         gameObject.layer = 9;
-        
+
         // view normal
         ren.color = new Color(1, 1, 1, 1);
     }
@@ -320,32 +338,29 @@ public class PlayerMove : MonoBehaviour
 
     void Die()
     {
-        // let gamemanager know
-        gameManager.PlayerDie();
-
         // stop move
         CancelInvoke();
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         
+        // let gamemanager know
+        gameManager.PlayerDie();
+
         // dying anim
         anim.SetTrigger("Die");
-
-        // revive
-        Invoke("Revive", 2);
     }
 
-    void Revive()
+    public void Revive()
     {
         // put init pos
-        gameObject.transform.position = new Vector3(0, 10, 0);
+        gameObject.transform.position = new Vector3(0, 2.5f, 0);
+        rigid.velocity = Vector2.zero;
 
         // immortal inactive
         gameObject.layer = 9;
-        gameManager.curHP = gameManager.maxHP;
 
         // start move
         rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        Invoke("availableControl", 1f);
+        Invoke("availableControl", 0.5f);
     }
 
 }
