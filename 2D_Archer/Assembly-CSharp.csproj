@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Arrow.cs" />
     <Compile Include="Assets\Script\Background.cs" />
+    <Compile Include="Assets\Script\DragonMove.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
     <Compile Include="Assets\Script\MeleeEnemyMove.cs" />
     <Compile Include="Assets\Script\PlayerMove.cs" />

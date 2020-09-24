@@ -140,6 +140,6 @@ public class MeleeEnemyMove : MonoBehaviour
     void Die()
     {
         gameManager.stagePoint += 100;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

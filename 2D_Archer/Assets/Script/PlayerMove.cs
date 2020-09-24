@@ -320,6 +320,9 @@ public class PlayerMove : MonoBehaviour
 
     void Die()
     {
+        // let gamemanager know
+        gameManager.PlayerDie();
+
         // stop move
         CancelInvoke();
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;

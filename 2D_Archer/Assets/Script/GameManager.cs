@@ -2,9 +2,13 @@
 
 public class GameManager : MonoBehaviour
 {
+    // score
     public int totalPoint = 0;
     public int stagePoint = 0;
+
+    // stage
     public int stageIndex = 0;
+    public GameObject[] stages;
 
     public int curHP;
     public int maxHP = 3;
@@ -24,5 +28,15 @@ public class GameManager : MonoBehaviour
 
         totalPoint += stagePoint;
         stagePoint = 0;
+    }
+
+    public void PlayerDie()
+    {
+
+    }
+
+    void PlayerRevive()
+    {
+
     }
 }
