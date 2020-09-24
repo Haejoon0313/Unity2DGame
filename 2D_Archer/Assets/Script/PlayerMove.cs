@@ -10,7 +10,7 @@ public class PlayerMove : MonoBehaviour
     float jumpPower = 50;
     float speedDirection = 1;
     float shootDirection = 1;
-    bool controlDisabled = false;
+    bool controlDisabled = true;
 
     // Arrow Variables
     public GameObject arrowObj;
@@ -34,6 +34,8 @@ public class PlayerMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         ren = GetComponent<SpriteRenderer>();
+
+        Invoke("availableControl", 1f);
     }
 
     // Update is called once per frame
@@ -239,9 +241,19 @@ public class PlayerMove : MonoBehaviour
         if(collision.gameObject.tag == "Item")
         {
             // Coin: Get Point
-            gameManager.stagePoint += 1;
+            if (collision.gameObject.name.Contains("Coin"))
+            {
+                gameManager.stagePoint += 10;
+            }
 
             // Heart: Get Health
+            if (collision.gameObject.name.Contains("Heart"))
+            {
+                if(gameManager.curHP < gameManager.maxHP)
+                {
+                    gameManager.curHP += 1;
+                }
+            }
 
 
             // Item inactive
@@ -250,7 +262,7 @@ public class PlayerMove : MonoBehaviour
         else if (collision.gameObject.tag == "Finish")
         {
             // Next Stage
-            Debug.Log("Next Stage");
+            gameManager.NextStage();
         }
         else if (collision.gameObject.tag == "Border")
         {
@@ -272,8 +284,8 @@ public class PlayerMove : MonoBehaviour
         controlDisabled = true;
 
         // health calculation
-        gameManager.playerHealth -= dmg;
-        if (gameManager.playerHealth <= 0)
+        gameManager.curHP -= dmg;
+        if (gameManager.curHP <= 0)
         {
             // call die func
             Die();
@@ -322,15 +334,15 @@ public class PlayerMove : MonoBehaviour
     void Revive()
     {
         // put init pos
-        gameObject.transform.position = new Vector2(-5.37f, 18f);
+        gameObject.transform.position = new Vector3(0, 10, 0);
 
         // immortal inactive
         gameObject.layer = 9;
-        gameManager.playerHealth = 3;
+        gameManager.curHP = gameManager.maxHP;
 
         // start move
         rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        Invoke("availableControl", 1.5f);
+        Invoke("availableControl", 1f);
     }
 
 }

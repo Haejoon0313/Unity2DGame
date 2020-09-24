@@ -2,23 +2,27 @@
 
 public class GameManager : MonoBehaviour
 {
-    public int totalPoint;
-    public int stagePoint;
-    public int stageIndex;
+    public int totalPoint = 0;
+    public int stagePoint = 0;
+    public int stageIndex = 0;
 
-    public int playerHealth;
+    public int curHP;
+    public int maxHP = 3;
 
     void Start()
     {
         totalPoint = 0;
         stagePoint = 0;
-        stageIndex = 0;
+        maxHP = 3;
 
-        playerHealth = 3;
+        curHP = maxHP;
     }
 
-    void Update()
+    public void NextStage()
     {
-        
+        stageIndex++;
+
+        totalPoint += stagePoint;
+        stagePoint = 0;
     }
 }

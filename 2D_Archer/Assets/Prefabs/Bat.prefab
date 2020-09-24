@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+  gameManager: {fileID: 0}
 --- !u!50 &6439908849087180511
 Rigidbody2D:
   serializedVersion: 4
