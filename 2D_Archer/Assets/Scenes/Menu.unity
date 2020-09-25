@@ -549,7 +549,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press to Start
+  m_Text: Touch to Start
 --- !u!222 &1336296340
 CanvasRenderer:
   m_ObjectHideFlags: 0
