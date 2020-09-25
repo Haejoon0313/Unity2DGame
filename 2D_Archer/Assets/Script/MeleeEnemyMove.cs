@@ -15,7 +15,6 @@ public class MeleeEnemyMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
-    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -135,7 +134,7 @@ public class MeleeEnemyMove : MonoBehaviour
 
     void Die()
     {
-        gameManager.stagePoint += 100;
+        GameManager.Instance.stagePoint += 100;
         gameObject.SetActive(false);
     }
 }

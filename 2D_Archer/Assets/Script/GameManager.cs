@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,35 +8,71 @@ public class GameManager : MonoBehaviour
     public int stagePoint = 0;
 
     // stage
-    public int stageIndex = 0;
-    public GameObject[] stages;
+    public int stageIndex = 1;
+    public int stageIndexMax = 3;
 
     // player
-    public PlayerMove player;
     public int curHP;
     public int maxHP = 3;
+
+    private static GameManager instance = null;
+
+    void Awake()
+    {
+        // only one gamemanager
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        // if another gamemanager, destroy
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    //게임 매니저 인스턴스에 접근할 수 있는 프로퍼티. static이므로 다른 클래스에서 맘껏 호출할 수 있다.
+    public static GameManager Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
 
     void Start()
     {
         // set point zero
-        totalPoint = 0;
         stagePoint = 0;
 
         // full HP
         curHP = maxHP;
+
+        
     }
 
     public void NextStage()
     {
-        if(stageIndex < stages.Length - 1)
-        {
-            // stage change
-            stages[stageIndex].SetActive(false);
-            stageIndex++;
-            stages[stageIndex].SetActive(true);
 
-            // player restore
-            PlayerRevive();
+        if(stageIndex < stageIndexMax)
+        {
+            // point calculation
+            totalPoint += stagePoint;
+
+            // set point zero
+            stagePoint = 0;
+
+            // full HP
+            curHP = maxHP;
+
+            // stage change
+            stageIndex++;
+            SceneManager.LoadScene("Stage0"+(stageIndex).ToString());
             
         }
         else
@@ -46,25 +83,24 @@ public class GameManager : MonoBehaviour
         }
         
 
-        // point calculation
-        totalPoint += stagePoint;
-        stagePoint = 0;
+        
     }
 
     public void PlayerDie()
     {
-        // set stage point zero
+        // set point zero
         stagePoint = 0;
 
         // revive
-        Invoke("PlayerRevive", 2);
+        Invoke("ReStage", 2);
     }
 
-    public void PlayerRevive()
+    public void ReStage()
     {
         // full HP
         curHP = maxHP;
 
-        player.Revive();
+        // stage change
+        SceneManager.LoadScene("Stage0" + stageIndex.ToString());
     }
 }

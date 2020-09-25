@@ -24,7 +24,6 @@ public class DragonMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
-    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -112,7 +111,7 @@ public class DragonMove : MonoBehaviour
         
         for(int i = 0; i < num; i++)
         {
-            summonXpos.Add(Random.Range(0f, 20f));
+            summonXpos.Add(Random.Range(-2.5f, 20f));
         }
 
         foreach (float x in summonXpos)
@@ -162,7 +161,7 @@ public class DragonMove : MonoBehaviour
 
     void Die()
     {
-        gameManager.stagePoint += 1000;
+        GameManager.Instance.stagePoint += 1000;
 
         // no collision
         gameObject.layer = 10;

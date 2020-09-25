@@ -26,7 +26,6 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
-    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -257,15 +256,15 @@ public class PlayerMove : MonoBehaviour
             // Coin: Get Point
             if (collision.gameObject.name.Contains("Coin"))
             {
-                gameManager.stagePoint += 10;
+                GameManager.Instance.stagePoint += 10;
             }
 
             // Heart: Get Health
             else if (collision.gameObject.name.Contains("Heart"))
             {
-                if (gameManager.curHP < gameManager.maxHP)
+                if (GameManager.Instance.curHP < GameManager.Instance.maxHP)
                 {
-                    gameManager.curHP += 1;
+                    GameManager.Instance.curHP += 1;
                 }
             }
 
@@ -276,7 +275,7 @@ public class PlayerMove : MonoBehaviour
         else if (collision.gameObject.tag == "Finish")
         {
             // Next Stage
-            gameManager.NextStage();
+            GameManager.Instance.NextStage();
 
         }
         else if (collision.gameObject.tag == "Border")
@@ -299,8 +298,8 @@ public class PlayerMove : MonoBehaviour
         controlDisabled = true;
 
         // health calculation
-        gameManager.curHP -= dmg;
-        if (gameManager.curHP <= 0)
+        GameManager.Instance.curHP -= dmg;
+        if (GameManager.Instance.curHP <= 0)
         {
             // view normal
             ren.color = new Color(1, 1, 1, 1);
@@ -343,24 +342,10 @@ public class PlayerMove : MonoBehaviour
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         
         // let gamemanager know
-        gameManager.PlayerDie();
+        GameManager.Instance.PlayerDie();
 
         // dying anim
         anim.SetTrigger("Die");
-    }
-
-    public void Revive()
-    {
-        // put init pos
-        gameObject.transform.position = new Vector3(0, 2.5f, 0);
-        rigid.velocity = Vector2.zero;
-
-        // immortal inactive
-        gameObject.layer = 9;
-
-        // start move
-        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        Invoke("availableControl", 0.5f);
     }
 
 }
