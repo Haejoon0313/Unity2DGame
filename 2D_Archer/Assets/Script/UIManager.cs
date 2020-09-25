@@ -27,6 +27,9 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        /// set resolution
+        Screen.SetResolution(Screen.width, Screen.width * 19 / 9, true);
     }
 
     // other classes call instance
