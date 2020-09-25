@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,11 +11,12 @@ public class GameManager : MonoBehaviour
     // stage
     public int stageIndex = 1;
     public int stageIndexMax = 3;
-
+    
     // player
     public int curHP;
     public int maxHP = 3;
 
+    // Instance
     private static GameManager instance = null;
 
     void Awake()
@@ -51,10 +53,16 @@ public class GameManager : MonoBehaviour
         stagePoint = 0;
 
         // full HP
-        curHP = maxHP;
-
-        
+        curHP = maxHP;   
     }
+
+    void Update()
+    {
+        DisplayHP();
+        DisplayStage();
+        DisplayScore();
+    }
+
 
     public void NextStage()
     {
@@ -72,7 +80,7 @@ public class GameManager : MonoBehaviour
 
             // stage change
             stageIndex++;
-            SceneManager.LoadScene("Stage0"+(stageIndex).ToString());
+            SceneManager.LoadScene("Stage0"+(stageIndex.ToString()));
             
         }
         else
@@ -81,9 +89,29 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             Debug.Log("Game Clear!");
         }
-        
+    }
 
-        
+    void DisplayHP()
+    {
+        foreach (Image im in UIManager.Instance.HPImages)
+        {
+            im.gameObject.SetActive(false);
+        }
+
+        for(int i = 0; i < curHP; i++)
+        {
+            UIManager.Instance.HPImages[i].gameObject.SetActive(true);
+        }
+    }
+
+    void DisplayStage()
+    {
+        UIManager.Instance.stageText.text = "STAGE " + stageIndex.ToString();
+    }
+
+    void DisplayScore()
+    {
+        UIManager.Instance.scoreText.text = (totalPoint+stagePoint).ToString();
     }
 
     public void PlayerDie()

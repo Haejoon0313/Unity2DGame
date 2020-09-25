@@ -210,7 +210,7 @@ public class PlayerMove : MonoBehaviour
             Invoke("Cast", 0.5f);
         }
     }
-    void Cast()
+    public void Cast()
     {
         // arrow initialize
         GameObject arrow = Instantiate(firearrowObj, transform.position, transform.rotation);
@@ -265,7 +265,7 @@ public class PlayerMove : MonoBehaviour
             // Coin: Get Point
             if (collision.gameObject.name.Contains("Coin"))
             {
-                GameManager.Instance.stagePoint += 10;
+                GameManager.Instance.stagePoint += 50;
             }
 
             // Heart: Get Health
