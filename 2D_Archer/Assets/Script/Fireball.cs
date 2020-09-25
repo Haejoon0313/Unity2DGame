@@ -13,7 +13,7 @@ public class Fireball : MonoBehaviour
     {
         if(rigid.velocity.y < 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 45);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 

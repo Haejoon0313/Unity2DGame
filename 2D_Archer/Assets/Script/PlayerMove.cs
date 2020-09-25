@@ -229,22 +229,31 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // normal enemy collision
         if(collision.gameObject.layer == 11)
         {
             onDamaged(collision.transform.position, 1);
         }
+
+        // boss attack collision
         else if(collision.gameObject.layer == 14)
         {
+            // fireball hit
             if (collision.gameObject.name.Contains("Fireball"))
             {
-                Debug.Log("Fireball Hit");
                 onDamaged(collision.transform.position, 1);
             }
 
-            else if (collision.gameObject.name.Contains("Bite") || collision.gameObject.name.Contains("Dragon"))
+            // bite hit
+            else if (collision.gameObject.name.Contains("Bite"))
             {
-                Debug.Log("Bite Hit");
                 onDamaged(collision.transform.position, 2);
+            }
+
+            // deathbreath hit
+            else if (collision.gameObject.name.Contains("DeathBreath"))
+            {
+                onDamaged(collision.transform.position, 3);
             }
         }
     }
