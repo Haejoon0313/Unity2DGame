@@ -4,7 +4,11 @@
 
 Title: Archer
 
-Tags: Fantasy, Platform, 2D
+Tags: Fantasy, Platform, Action, 2D
+
+Platform: Android
+
+Resolution: 3040 X 1440
 
 Director: jOoN
 
