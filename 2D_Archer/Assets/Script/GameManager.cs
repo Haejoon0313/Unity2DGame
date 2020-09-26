@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour
 
     void DisplaySkill()
     {
-        UIManager.Instance.skillText.text = skillNum.ToString();
         UIManager.Instance.skillActive(skillNum);
     }
 

@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour
     // UI
     public Text scoreText;
     public Text stageText;
-    public Text skillText;
     public Button attackButton;
     public Button jumpButton;
     public Button skillButton;

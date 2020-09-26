@@ -583,7 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowObj: {fileID: 7245192145533243988, guid: cca0954102e251d4b87d83f3c225737d,
     type: 3}
-  firearrowObj: {fileID: 6924670434294909941, guid: c0e8e2708171b7c4aba4024703cbe63a,
+  firearrowObj: {fileID: 3374407802936313841, guid: c0e8e2708171b7c4aba4024703cbe63a,
     type: 3}
 --- !u!1001 &465116462
 PrefabInstance:
@@ -5388,6 +5388,9 @@ MonoBehaviour:
   stageIndexMax: 3
   curHP: 0
   maxHP: 3
+  skillNum: 1
+  skillCool: 0
+  enableAction: 1
 --- !u!61 &1962613672
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     float curChargeTime = 0;
     float maxChargeTime = 10f;
     int curChargeNum = 1;
-    int maxChargeNum = 2;
+    int maxChargeNum = 1;
 
     // Environment
     Rigidbody2D rigid;
@@ -145,7 +145,7 @@ public class PlayerMove : MonoBehaviour
             curChargeNum++;
             curChargeTime = 0;
             GameManager.Instance.skillNum = curChargeNum;
-            GameManager.Instance.skillCool = 1;
+            GameManager.Instance.skillCool = 1.0f;
         }
     }
 

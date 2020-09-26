@@ -10,7 +10,7 @@ public class Arrow : MonoBehaviour
         {
             lifetime += Time.deltaTime;
 
-            if(lifetime > 4)
+            if(lifetime > 2.5f)
             {
                 Destroy(gameObject);
             }
