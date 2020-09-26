@@ -9,6 +9,11 @@ public class UIManager : MonoBehaviour
     // UI
     public Text scoreText;
     public Text stageText;
+    public Text skillText;
+    public Button attackButton;
+    public Button jumpButton;
+    public Button skillButton;
+    public Image skillCoolImage;
     public Image[] HPImages;
 
     // Instance
@@ -44,4 +49,30 @@ public class UIManager : MonoBehaviour
             return instance;
         }
     }
+
+    public void skillActive(int skillNum)
+    {
+        // unable to touch skill when zero
+        if(skillNum == 0)
+        {
+            skillButton.interactable = false;
+        }
+        else
+        {
+            skillButton.interactable = true;
+        }
+    }
+
+    public void skillCool(float percent)
+    {
+        skillCoolImage.fillAmount = 1.0f - percent;
+    }
+
+    public void actionActive(bool active)
+    {
+        attackButton.interactable = active;
+        jumpButton.interactable = active;
+        skillButton.interactable = active;
+    }
+
 }

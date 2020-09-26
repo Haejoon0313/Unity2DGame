@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviour
     float maxShotDelay = 0.7f;
     float curChargeTime = 0;
     float maxChargeTime = 10f;
-    int curChargeNum = 0;
+    int curChargeNum = 1;
     int maxChargeNum = 2;
 
     // Environment
@@ -122,7 +122,7 @@ public class PlayerMove : MonoBehaviour
     void Jump()
     {
         // Jump
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping") && !controlDisabled)
+        if (Input.GetButton("Jump") && !anim.GetBool("isJumping") && !controlDisabled)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
@@ -138,11 +138,14 @@ public class PlayerMove : MonoBehaviour
         if (curChargeNum < maxChargeNum)
         {
             curChargeTime += Time.deltaTime;
+            GameManager.Instance.skillCool = curChargeTime / maxChargeTime;
         }
         if (curChargeTime >= maxChargeTime)
         {
             curChargeNum++;
             curChargeTime = 0;
+            GameManager.Instance.skillNum = curChargeNum;
+            GameManager.Instance.skillCool = 1;
         }
     }
 
@@ -155,17 +158,17 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Attack
-        if (Input.GetButtonDown("Fire1") && !controlDisabled)
+        if (Input.GetButton("Fire1") && !controlDisabled)
         {
             // animation
             anim.SetTrigger("Shoot");
             shootDirection = speedDirection;
-            controlDisabled = true;
+            disableControl();
 
             // make delay zero
             curShotDelay = 0;
 
-            Invoke("Shoot", 0.5f);
+            Invoke("Shoot", 0.45f);
         }
     }
 
@@ -183,7 +186,7 @@ public class PlayerMove : MonoBehaviour
         }
         arrowrigid.AddForce(Vector2.right * 20 * shootDirection, ForceMode2D.Impulse);
 
-        Invoke("availableControl", 0.2f);
+        availableControl();
     }
 
     void UltimateAttack()
@@ -202,12 +205,13 @@ public class PlayerMove : MonoBehaviour
             // animation
             anim.SetTrigger("Shoot");
             shootDirection = speedDirection;
-            controlDisabled = true;
+            disableControl();
 
             // use charging ultimate
             curChargeNum--;
+            GameManager.Instance.skillNum = curChargeNum;
 
-            Invoke("Cast", 0.5f);
+            Invoke("Cast", 0.45f);
         }
     }
     public void Cast()
@@ -290,7 +294,7 @@ public class PlayerMove : MonoBehaviour
         else if (collision.gameObject.tag == "Border")
         {
             // disable control for a while
-            controlDisabled = true;
+            disableControl();
 
             // call die func
             Die();
@@ -304,7 +308,7 @@ public class PlayerMove : MonoBehaviour
         gameObject.layer = 10;
 
         // disable control for a while
-        controlDisabled = true;
+        disableControl();
 
         // health calculation
         GameManager.Instance.curHP -= dmg;
@@ -342,6 +346,13 @@ public class PlayerMove : MonoBehaviour
     void availableControl()
     {
         controlDisabled = false;
+        GameManager.Instance.enableAction = true;
+    }
+
+    void disableControl()
+    {
+        controlDisabled = true;
+        GameManager.Instance.enableAction = false;
     }
 
     void Die()

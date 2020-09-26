@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     // player
     public int curHP;
     public int maxHP = 3;
+    public int skillNum = 1;
+    public float skillCool;
+    public bool enableAction = true;
 
     // Instance
     private static GameManager instance = null;
@@ -58,9 +61,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // display UI
         DisplayHP();
         DisplayStage();
         DisplayScore();
+        DisplaySkill();
+        DisplayButton();
     }
 
 
@@ -112,6 +118,18 @@ public class GameManager : MonoBehaviour
     void DisplayScore()
     {
         UIManager.Instance.scoreText.text = (totalPoint+stagePoint).ToString();
+    }
+
+    void DisplaySkill()
+    {
+        UIManager.Instance.skillText.text = skillNum.ToString();
+        UIManager.Instance.skillActive(skillNum);
+    }
+
+    void DisplayButton()
+    {
+        UIManager.Instance.actionActive(enableAction);
+        UIManager.Instance.skillCool(skillCool);
     }
 
     public void PlayerDie()

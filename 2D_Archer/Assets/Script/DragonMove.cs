@@ -20,9 +20,10 @@ public class DragonMove : MonoBehaviour
     public GameObject biteObj;
 
     // Attack 3 Variables
+    public GameObject deathbreathObj;
     public float curUltTime = 0;
     float maxUltTime = 10;
-    public GameObject deathbreathObj;
+    bool isBreathing = false;
 
     // Environment
     Rigidbody2D rigid;
@@ -66,7 +67,7 @@ public class DragonMove : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ultimate")
+        if (!isBreathing && collision.gameObject.tag == "Ultimate")
         {
             CancelInvoke();
             SkillEnd();
@@ -183,6 +184,9 @@ public class DragonMove : MonoBehaviour
         // collider active
         deathbreathObj.SetActive(true);
 
+        // after start breathing, don't hurt
+        isBreathing = true;
+
         // SkillEnd
         Invoke("SkillEnd", 2f);
 
@@ -206,6 +210,7 @@ public class DragonMove : MonoBehaviour
         summonCircle.Clear();
         summonFireball.Clear();
         biteObj.SetActive(false);
+        isBreathing = false;
         deathbreathObj.SetActive(false);
     }
 
