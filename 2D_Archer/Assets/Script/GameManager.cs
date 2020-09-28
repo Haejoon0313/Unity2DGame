@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     public float skillCool;
     public bool enableAction = true;
 
+    // boss
+    public float curBossHP = 100;
+    public float maxBossHP = 100;
+
     // Instance
     private static GameManager instance = null;
 
@@ -67,6 +71,13 @@ public class GameManager : MonoBehaviour
         DisplayScore();
         DisplaySkill();
         DisplayButton();
+        if (curBossHP < maxBossHP && curBossHP > 0)
+            DisplayBossHP();
+        else
+        {
+            // boss hp inactive
+            UIManager.Instance.BossUI.gameObject.SetActive(false);
+        }
     }
 
 
@@ -87,13 +98,14 @@ public class GameManager : MonoBehaviour
             // stage change
             stageIndex++;
             SceneManager.LoadScene("Stage0"+(stageIndex.ToString()));
-            
+
+            UIManager.Instance.startObj.gameObject.SetActive(false);
         }
         else
         {
             // time stop
             Time.timeScale = 0;
-            Debug.Log("Game Clear!");
+            UIManager.Instance.clearObj.gameObject.SetActive(true);
         }
     }
 
@@ -131,13 +143,29 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.skillCool(skillCool);
     }
 
+    void DisplayBossHP()
+    {
+        UIManager.Instance.BossUI.gameObject.SetActive(true);
+        UIManager.Instance.BossHPImage.gameObject.transform.localScale = new Vector3(curBossHP / maxBossHP, 1, 1);
+    }
+
+    
+
     public void PlayerDie()
     {
         // set point zero
         stagePoint = 0;
 
         // revive
-        Invoke("ReStage", 2);
+        Invoke("RetryActive", 2);
+
+        
+    }
+    void RetryActive()
+    {
+        // time stop & retry touch enable
+        Time.timeScale = 0;
+        UIManager.Instance.startObj.gameObject.SetActive(true);
     }
 
     public void ReStage()
@@ -147,5 +175,27 @@ public class GameManager : MonoBehaviour
 
         // stage change
         SceneManager.LoadScene("Stage0" + stageIndex.ToString());
+
+        // time pass & retry touch disable
+        Time.timeScale = 1;
+        UIManager.Instance.startObj.gameObject.SetActive(false);
+    }
+
+    public void ReStart()
+    {
+        // full HP
+        curHP = maxHP;
+
+        // stage change
+        SceneManager.LoadScene("Menu");
+
+        // time pass & retry touch disable
+        Time.timeScale = 1;
+        UIManager.Instance.clearObj.gameObject.SetActive(false);
+
+        // reset gamemanager
+        Destroy(EventSystem.Instance.gameObject);
+        Destroy(UIManager.Instance.gameObject);
+        Destroy(this.gameObject);
     }
 }

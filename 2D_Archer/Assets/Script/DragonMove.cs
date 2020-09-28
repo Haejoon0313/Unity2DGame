@@ -6,8 +6,6 @@ public class DragonMove : MonoBehaviour
 {
     // Enemy Variables
     int attackId = 0;
-    int maxHP = 100;
-    public int health;
 
     // Attack 1 Variables
     public GameObject fireballObj;
@@ -38,13 +36,13 @@ public class DragonMove : MonoBehaviour
         anim = GetComponent<Animator>();
         ren = GetComponent<SpriteRenderer>();
 
-        health = maxHP;
+        GameManager.Instance.curBossHP = GameManager.Instance.maxBossHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(health != maxHP)
+        if(GameManager.Instance.curBossHP != GameManager.Instance.maxBossHP)
         {
             anim.SetBool("isBattle", true);
         }
@@ -79,8 +77,8 @@ public class DragonMove : MonoBehaviour
     void onDamaged(int dmg)
     {
         // health calculation
-        health -= dmg;
-        if(health <= 0)
+        GameManager.Instance.curBossHP -= dmg;
+        if(GameManager.Instance.curBossHP <= 0)
         {
             CancelInvoke();
             Die();

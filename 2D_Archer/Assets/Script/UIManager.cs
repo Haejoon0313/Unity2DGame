@@ -14,6 +14,10 @@ public class UIManager : MonoBehaviour
     public Button skillButton;
     public Image skillCoolImage;
     public Image[] HPImages;
+    public GameObject BossUI;
+    public Image BossHPImage;
+    public GameObject startObj;
+    public GameObject clearObj;
 
     // Instance
     private static UIManager instance = null;
@@ -49,6 +53,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void FirstStage()
+    {
+        // go to the first stage
+        SceneManager.LoadScene("Stage01");
+    }
+
     public void skillActive(int skillNum)
     {
         // unable to touch skill when zero
@@ -73,5 +83,6 @@ public class UIManager : MonoBehaviour
         jumpButton.interactable = active;
         skillButton.interactable = active;
     }
+
 
 }
