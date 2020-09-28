@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public int skillNum = 1;
     public float skillCool;
     public bool enableAction = true;
+    AudioSource audiosrc;
 
     // boss
     public float curBossHP = 100;
@@ -28,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        audiosrc = GetComponent<AudioSource>();
+
         // only one gamemanager
         if (instance == null)
         {
@@ -79,9 +82,13 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.BossUI.gameObject.SetActive(false);
         }
     }
+    
+    public void PlayerClear()
+    {
+        Invoke("NextStage", 2);
+    }
 
-
-    public void NextStage()
+    void NextStage()
     {
 
         if(stageIndex < stageIndexMax)
@@ -100,6 +107,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Stage0"+(stageIndex.ToString()));
 
             UIManager.Instance.startObj.gameObject.SetActive(false);
+
+            // time pass
+            Time.timeScale = 1;
         }
         else
         {
@@ -149,8 +159,6 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.BossHPImage.gameObject.transform.localScale = new Vector3(curBossHP / maxBossHP, 1, 1);
     }
 
-    
-
     public void PlayerDie()
     {
         // set point zero
@@ -159,7 +167,8 @@ public class GameManager : MonoBehaviour
         // revive
         Invoke("RetryActive", 2);
 
-        
+        // bgm change
+        AudioManager.Instance.ChangeBGM(2);
     }
     void RetryActive()
     {
@@ -179,6 +188,9 @@ public class GameManager : MonoBehaviour
         // time pass & retry touch disable
         Time.timeScale = 1;
         UIManager.Instance.startObj.gameObject.SetActive(false);
+
+        // bgm restart
+        AudioManager.Instance.ChangeBGM(0);
     }
 
     public void ReStart()
@@ -196,6 +208,15 @@ public class GameManager : MonoBehaviour
         // reset gamemanager
         Destroy(EventSystem.Instance.gameObject);
         Destroy(UIManager.Instance.gameObject);
+        Destroy(AudioManager.Instance.gameObject);
         Destroy(this.gameObject);
+    }
+
+    public void KillEnemy()
+    {
+        stagePoint += 100;
+        // sound
+        audiosrc.clip = AudioManager.Instance.enemyDeath;
+        audiosrc.Play();
     }
 }

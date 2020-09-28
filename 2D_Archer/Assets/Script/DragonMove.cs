@@ -27,6 +27,7 @@ public class DragonMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
+    AudioSource audiosrc;
     public GameObject player;
 
     // Start is called before the first frame update
@@ -35,6 +36,7 @@ public class DragonMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         ren = GetComponent<SpriteRenderer>();
+        audiosrc = GetComponent<AudioSource>();
 
         GameManager.Instance.curBossHP = GameManager.Instance.maxBossHP;
     }
@@ -57,6 +59,7 @@ public class DragonMove : MonoBehaviour
             {
                 CancelInvoke();
                 anim.SetTrigger("Hurt");
+                AudioManager.Instance.ChangeBGM(1);
                 Invoke("Think", 2.5f);
             }
             onDamaged(1);
@@ -78,7 +81,8 @@ public class DragonMove : MonoBehaviour
     {
         // health calculation
         GameManager.Instance.curBossHP -= dmg;
-        if(GameManager.Instance.curBossHP <= 0)
+
+        if (GameManager.Instance.curBossHP <= 0)
         {
             CancelInvoke();
             Die();
@@ -122,6 +126,8 @@ public class DragonMove : MonoBehaviour
                 // cooltime start
                 curUltTime = 0;
                 anim.SetTrigger("DeathBreath");
+                audiosrc.clip = AudioManager.Instance.bossBreath;
+                audiosrc.Play();
                 Invoke("DeathBreath", 4.5f);
                 break;
 
@@ -146,6 +152,10 @@ public class DragonMove : MonoBehaviour
     }
     void SummonFire()
     {
+        // sound
+        audiosrc.clip = AudioManager.Instance.bossLeg;
+        audiosrc.Play();
+
         foreach (float x in summonXpos)
         {
             summonFireball.Add(Instantiate(fireballObj, new Vector3(x, 0, 0), Quaternion.Euler(0, 0, 180)));
@@ -179,6 +189,10 @@ public class DragonMove : MonoBehaviour
 
     void DeathBreath()
     {
+        // sound
+        audiosrc.clip = AudioManager.Instance.bossBreath;
+        audiosrc.Play();
+
         // collider active
         deathbreathObj.SetActive(true);
 
@@ -203,6 +217,8 @@ public class DragonMove : MonoBehaviour
         {
             Destroy(f);
         }
+
+        audiosrc.Stop();
 
         summonXpos.Clear();
         summonCircle.Clear();

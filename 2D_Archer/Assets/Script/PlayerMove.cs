@@ -17,7 +17,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject firearrowObj;
     float curShotDelay = 0;
     float maxShotDelay = 0.7f;
-    float curChargeTime = 0;
+    float curChargeTime = 0f;
     float maxChargeTime = 10f;
     int curChargeNum = 1;
     int maxChargeNum = 1;
@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
+    AudioSource audiosrc;
 
     // Start is called before the first frame update
     void Awake()
@@ -33,6 +34,7 @@ public class PlayerMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         ren = GetComponent<SpriteRenderer>();
+        audiosrc = GetComponent<AudioSource>();
 
         Invoke("availableControl", 1f);
     }
@@ -83,7 +85,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Landing Platform
-        if (rigid.velocity.y < 0)
+        if (rigid.velocity.y < -5)
         {
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
             if (rayHit.collider != null)
@@ -134,19 +136,23 @@ public class PlayerMove : MonoBehaviour
         // Normal Attack Delay
         curShotDelay += Time.deltaTime;
 
-        // Store Ultimate Attack until 3
+        // Store Ultimate Attack until 1
         if (curChargeNum < maxChargeNum)
         {
             curChargeTime += Time.deltaTime;
             GameManager.Instance.skillCool = curChargeTime / maxChargeTime;
         }
+        else
+        {
+            curChargeTime = 0;
+            GameManager.Instance.skillCool = 1;
+        }
         if (curChargeTime >= maxChargeTime)
         {
             curChargeNum++;
-            curChargeTime = 0;
             GameManager.Instance.skillNum = curChargeNum;
-            GameManager.Instance.skillCool = 1.0f;
         }
+        
     }
 
     void Attack()
@@ -185,6 +191,10 @@ public class PlayerMove : MonoBehaviour
             arrowren.flipX = true;
         }
         arrowrigid.AddForce(Vector2.right * 20 * shootDirection, ForceMode2D.Impulse);
+
+        // sound
+        audiosrc.clip = AudioManager.Instance.playerAttack;
+        audiosrc.Play();
 
         availableControl();
     }
@@ -228,6 +238,10 @@ public class PlayerMove : MonoBehaviour
         }
         arrowrigid.AddForce(Vector2.right * 10 * shootDirection, ForceMode2D.Impulse);
 
+        // sound
+        audiosrc.clip = AudioManager.Instance.playerSkill;
+        audiosrc.Play();
+
         Invoke("availableControl", 0.2f);
     }
 
@@ -270,6 +284,9 @@ public class PlayerMove : MonoBehaviour
             if (collision.gameObject.name.Contains("Coin"))
             {
                 GameManager.Instance.stagePoint += 50;
+                // sound
+                audiosrc.clip = AudioManager.Instance.playerCoin;
+                audiosrc.Play();
             }
 
             // Heart: Get Health
@@ -279,6 +296,9 @@ public class PlayerMove : MonoBehaviour
                 {
                     GameManager.Instance.curHP += 1;
                 }
+                // sound
+                audiosrc.clip = AudioManager.Instance.playerHeart;
+                audiosrc.Play();
             }
 
 
@@ -287,8 +307,15 @@ public class PlayerMove : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Finish")
         {
+            // sound
+            audiosrc.clip = AudioManager.Instance.playerClear;
+            audiosrc.Play();
+
+            // disable control for a while
+            disableControl();
+
             // Next Stage
-            GameManager.Instance.NextStage();
+            GameManager.Instance.PlayerClear();
 
         }
         else if (collision.gameObject.tag == "Border")
@@ -321,6 +348,10 @@ public class PlayerMove : MonoBehaviour
             Die();
             return;
         }
+
+        // sound
+        audiosrc.clip = AudioManager.Instance.playerHit;
+        audiosrc.Play();
 
         // view alpha
         ren.color = new Color(1f, 0.1f, 0.1f, 1);

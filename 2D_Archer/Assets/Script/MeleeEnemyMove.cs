@@ -15,6 +15,7 @@ public class MeleeEnemyMove : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
+    AudioSource audiosrc;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,6 +23,7 @@ public class MeleeEnemyMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         ren = GetComponent<SpriteRenderer>();
+        audiosrc = GetComponent<AudioSource>();
 
         Invoke("Think", ThinkTime);
     }
@@ -90,6 +92,14 @@ public class MeleeEnemyMove : MonoBehaviour
     }
     void onDamaged(Vector2 targetPos, int dmg)
     {
+        // health calculation
+        health -= dmg;
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
+
         // view alpha
         ren.color = new Color(1f, 0.1f, 0.1f, 1);
 
@@ -100,12 +110,9 @@ public class MeleeEnemyMove : MonoBehaviour
         // follow player
         speedDirection = dirc*(-1);
 
-        // health calculation
-        health -= dmg;
-        if(health <= 0)
-        {
-            Die();
-        }
+        // sound
+        audiosrc.clip = AudioManager.Instance.enemyHit;
+        audiosrc.Play();
 
         // go to normal state
         CancelInvoke();
@@ -134,7 +141,7 @@ public class MeleeEnemyMove : MonoBehaviour
 
     void Die()
     {
-        GameManager.Instance.stagePoint += 100;
+        GameManager.Instance.KillEnemy();
         gameObject.SetActive(false);
     }
 }
