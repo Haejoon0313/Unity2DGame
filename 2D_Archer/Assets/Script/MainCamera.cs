@@ -2,7 +2,6 @@
 
 public class MainCamera : MonoBehaviour
 {
-    public GameObject player;
 
     float camera_x_pos;
     float camera_y_pos;
@@ -15,7 +14,7 @@ public class MainCamera : MonoBehaviour
 
     void Start()
     {
-        gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
+        gameObject.transform.position = new Vector3(PlayerMove.Instance.gameObject.transform.position.x, PlayerMove.Instance.gameObject.transform.position.y, -10);
     }
 
     // Update is called once per frame
@@ -24,8 +23,8 @@ public class MainCamera : MonoBehaviour
         camera_x_pos = gameObject.transform.position.x;
         camera_y_pos = gameObject.transform.position.y;
 
-        player_x_pos = player.transform.position.x;
-        player_y_pos = player.transform.position.y;
+        player_x_pos = PlayerMove.Instance.gameObject.transform.position.x;
+        player_y_pos = PlayerMove.Instance.gameObject.transform.position.y;
 
         x_diff = camera_x_pos - player_x_pos;
         y_diff = camera_y_pos - player_y_pos;

@@ -2,11 +2,9 @@
 
 public class Background : MonoBehaviour
 {
-    public GameObject player;
-
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.position = player.transform.position;
+        gameObject.transform.position = PlayerMove.Instance.gameObject.transform.position;
     }
 }

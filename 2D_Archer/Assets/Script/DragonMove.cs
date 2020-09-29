@@ -28,9 +28,7 @@ public class DragonMove : MonoBehaviour
     Animator anim;
     SpriteRenderer ren;
     AudioSource audiosrc;
-    public GameObject player;
 
-    // Start is called before the first frame update
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -41,7 +39,6 @@ public class DragonMove : MonoBehaviour
         GameManager.Instance.curBossHP = GameManager.Instance.maxBossHP;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(GameManager.Instance.curBossHP != GameManager.Instance.maxBossHP)
@@ -96,7 +93,7 @@ public class DragonMove : MonoBehaviour
         int j = 2;
 
         // if player too close, bite attack addition
-        if (player.transform.position.x > 20)
+        if (PlayerMove.Instance.gameObject.transform.position.x > 20)
         {
             i = 0;
         }
@@ -238,6 +235,7 @@ public class DragonMove : MonoBehaviour
         // stop move
         CancelInvoke();
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        SkillEnd();
 
         // dying anim
         anim.SetTrigger("Die");

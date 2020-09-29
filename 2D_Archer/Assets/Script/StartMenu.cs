@@ -11,8 +11,11 @@ public class StartMenu : MonoBehaviour
 
     void Awake()
     {
-        // set resolution
-        Screen.SetResolution(Screen.width, Screen.width * 19/9, true);
+/*        // set resolution
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        Screen.SetResolution(Screen.width, Screen.width * 9/19, true);
+
+        startText.text = Screen.width.ToString();*/
     }
 
     void Update()
@@ -33,6 +36,6 @@ public class StartMenu : MonoBehaviour
     public void FirstStage()
     {
         // go to the first stage
-        SceneManager.LoadScene("Stage01");
+        SceneManager.LoadScene("Stage01", 0);
     }
 }

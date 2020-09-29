@@ -99,8 +99,9 @@ public class GameManager : MonoBehaviour
             // set point zero
             stagePoint = 0;
 
-            // full HP
+            // player init
             curHP = maxHP;
+            PlayerMove.Instance.gameObject.transform.position = new Vector3(0, 4.5f, 0);
 
             // stage change
             stageIndex++;
@@ -179,10 +180,14 @@ public class GameManager : MonoBehaviour
 
     public void ReStage()
     {
-        // full HP
+        // player init
         curHP = maxHP;
+        PlayerMove.Instance.gameObject.transform.position = new Vector3(0, 4.5f, 0);
+        PlayerMove.Instance.rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        PlayerMove.Instance.availableControl();
+        PlayerMove.Instance.gameObject.layer = 9;
 
-        // stage change
+        // stage load
         SceneManager.LoadScene("Stage0" + stageIndex.ToString());
 
         // time pass & retry touch disable
@@ -195,12 +200,6 @@ public class GameManager : MonoBehaviour
 
     public void ReStart()
     {
-        // full HP
-        curHP = maxHP;
-
-        // stage change
-        SceneManager.LoadScene("Menu");
-
         // time pass & retry touch disable
         Time.timeScale = 1;
         UIManager.Instance.clearObj.gameObject.SetActive(false);
@@ -209,6 +208,11 @@ public class GameManager : MonoBehaviour
         Destroy(EventSystem.Instance.gameObject);
         Destroy(UIManager.Instance.gameObject);
         Destroy(AudioManager.Instance.gameObject);
+        Destroy(PlayerMove.Instance.gameObject);
+
+        // stage change
+        SceneManager.LoadScene("Menu");
+
         Destroy(this.gameObject);
     }
 

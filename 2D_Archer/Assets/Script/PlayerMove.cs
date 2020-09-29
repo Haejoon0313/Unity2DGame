@@ -22,21 +22,55 @@ public class PlayerMove : MonoBehaviour
     int curChargeNum = 1;
     int maxChargeNum = 1;
 
+    // mobile key mapping
+    int left_value;
+    int right_value;
+    bool jump_value;
+    bool attack_value;
+    bool skill_value;
+
     // Environment
-    Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer ren;
     AudioSource audiosrc;
 
-    // Start is called before the first frame update
+    // Instance
+    private static PlayerMove instance = null;
+
     void Awake()
     {
+        // only one PlayerMove
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        // if another PlayerMove, destroy
+        else
+        {
+            Destroy(gameObject);
+        }
+
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         ren = GetComponent<SpriteRenderer>();
         audiosrc = GetComponent<AudioSource>();
 
         Invoke("availableControl", 1f);
+    }
+
+    // other classes call instance
+    public static PlayerMove Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
     }
 
     // Update is called once per frame
@@ -57,7 +91,7 @@ public class PlayerMove : MonoBehaviour
     void Move()
     {
         // Moving Speed
-        float h = Input.GetAxisRaw("Horizontal");
+        float h = left_value + right_value;
 
         // If damaged, player control impossible
         if (!controlDisabled)
@@ -105,9 +139,9 @@ public class PlayerMove : MonoBehaviour
     void Condition()
     {
         // Stop Speed
-        if (Input.GetButtonUp("Horizontal"))
+        if ((left_value + right_value) == 0)
         {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.2f, rigid.velocity.y);
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.1f, rigid.velocity.y);
         }
 
         // Player Moving Check
@@ -124,7 +158,7 @@ public class PlayerMove : MonoBehaviour
     void Jump()
     {
         // Jump
-        if (Input.GetButton("Jump") && !anim.GetBool("isJumping") && !controlDisabled)
+        if (jump_value && !anim.GetBool("isJumping") && !controlDisabled)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
@@ -164,7 +198,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Attack
-        if (Input.GetButton("Fire1") && !controlDisabled)
+        if (attack_value && !controlDisabled)
         {
             // animation
             anim.SetTrigger("Shoot");
@@ -208,7 +242,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Attack
-        if (Input.GetButtonDown("Fire2") && !controlDisabled)
+        if (skill_value && !controlDisabled)
         {
 
 
@@ -313,6 +347,7 @@ public class PlayerMove : MonoBehaviour
 
             // disable control for a while
             disableControl();
+            Invoke("availableControl", 3f);
 
             // Next Stage
             GameManager.Instance.PlayerClear();
@@ -374,13 +409,13 @@ public class PlayerMove : MonoBehaviour
         ren.color = new Color(1, 1, 1, 1);
     }
 
-    void availableControl()
+    public void availableControl()
     {
         controlDisabled = false;
         GameManager.Instance.enableAction = true;
     }
 
-    void disableControl()
+    public void disableControl()
     {
         controlDisabled = true;
         GameManager.Instance.enableAction = false;
@@ -397,6 +432,50 @@ public class PlayerMove : MonoBehaviour
 
         // dying anim
         anim.SetTrigger("Die");
+    }
+
+    public void ButtonDown(string type)
+    {
+        switch (type)
+        {
+            case "L":
+                left_value = -1;
+                break;
+            case "R":
+                right_value = 1;
+                break;
+            case "J":
+                jump_value = true;
+                break;
+            case "A":
+                attack_value = true;
+                break;
+            case "S":
+                skill_value = true;
+                break;
+        }
+    }
+
+    public void ButtonUp(string type)
+    {
+        switch (type)
+        {
+            case "L":
+                left_value = 0;
+                break;
+            case "R":
+                right_value = 0;
+                break;
+            case "J":
+                jump_value = false;
+                break;
+            case "A":
+                attack_value = false;
+                break;
+            case "S":
+                skill_value = false;
+                break;
+        }
     }
 
 }

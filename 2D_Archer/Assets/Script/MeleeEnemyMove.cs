@@ -17,7 +17,6 @@ public class MeleeEnemyMove : MonoBehaviour
     SpriteRenderer ren;
     AudioSource audiosrc;
 
-    // Start is called before the first frame update
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -28,7 +27,6 @@ public class MeleeEnemyMove : MonoBehaviour
         Invoke("Think", ThinkTime);
     }
 
-    // Update is called once per frame
     void Update()
     {
 
