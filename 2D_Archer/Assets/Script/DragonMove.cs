@@ -36,7 +36,7 @@ public class DragonMove : MonoBehaviour
         ren = GetComponent<SpriteRenderer>();
         audiosrc = GetComponent<AudioSource>();
 
-        GameManager.Instance.curBossHP = GameManager.Instance.maxBossHP;
+        //GameManager.Instance.curBossHP = GameManager.Instance.maxBossHP;
     }
 
     void Update()

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     // stage
     int stageIndex = 1;
-    int stageIndexMax = 4;
+    int stageIndexMax = 1;
     
     // player
     public int curHP;
