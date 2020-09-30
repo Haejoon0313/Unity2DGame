@@ -12,6 +12,8 @@ Reference Resolution: 3040 X 1440
 
 Director: jOoN
 
+Company: π-o-neer
+
 ------------
 
 ## <Boss Battle v0.1 Released>
