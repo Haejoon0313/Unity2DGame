@@ -70,7 +70,4 @@ crashlytics-build.properties
 InitTestScene*.unity.meta
 InitTestScene*.unity
 
-# apk file
-2D Archer.apk
-
 # End of https://www.toptal.com/developers/gitignore/api/unity

@@ -2808,6 +2808,7 @@ MonoBehaviour:
   startObj: {fileID: 1697432109}
   clearObj: {fileID: 2132639550}
   startText: {fileID: 1363918778}
+  clearText: {fileID: 157017352}
 --- !u!4 &1232347047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7827295162416520105, guid: 38310063048f6f94e80d9a7ba403bd19,
@@ -3776,8 +3777,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalPoint: 0
   stagePoint: 0
-  stageIndex: 1
-  stageIndexMax: 3
   curHP: 3
   maxHP: 3
   skillNum: 1

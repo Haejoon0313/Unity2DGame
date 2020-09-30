@@ -119,7 +119,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Landing Platform
-        if (rigid.velocity.y < -5)
+        if (rigid.velocity.y <= 0)
         {
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down * 2, 2, LayerMask.GetMask("Platform"));
             if (rayHit.collider != null)
@@ -134,6 +134,7 @@ public class PlayerMove : MonoBehaviour
                 anim.SetBool("isJumping", true);
             }
         }
+        
     }
 
     void Condition()

@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     public int stagePoint = 0;
 
     // stage
-    public int stageIndex = 1;
-    public int stageIndexMax = 3;
+    int stageIndex = 1;
+    int stageIndexMax = 4;
     
     // player
     public int curHP;

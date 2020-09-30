@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     public Image BossHPImage;
     public GameObject startObj;
     public GameObject clearObj;
-    public Text startText;
 
     // Instance
     private static UIManager instance = null;
@@ -37,11 +36,6 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-/*        // set resolution
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-        Screen.SetResolution(Screen.width, Screen.width * 9 / 19, true);
-
-        startText.text = Screen.width.ToString();*/
     }
 
     // other classes call instance
@@ -63,7 +57,9 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Stage01");
     }*/
 
-    public void skillActive(int skillNum)
+    
+
+        public void skillActive(int skillNum)
     {
         // unable to touch skill when zero
         if(skillNum == 0)
@@ -87,6 +83,7 @@ public class UIManager : MonoBehaviour
         jumpButton.interactable = active;
         skillButton.interactable = active;
     }
+
 
 
 }
