@@ -14,8 +14,18 @@ Director: jOoN
 
 ------------
 
+## <Archer v0.2 Released>
+
+Date: 2020.09.30
+
+- Now you can enter the last stage.
+- Fix landing animation problem.
+- The number of stages are 4. (3rd stage will be modified. Now it is exactly the same with 2nd stage.)
+
+------------
+
 ## <Archer v0.1 Released>
 
 Date: 2020.09.29
 
-It is made by CC0 resources.
+- All parts of this game are made by CC0 resources.
