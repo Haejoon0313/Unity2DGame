@@ -869,7 +869,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 80, y: 0}
   m_SizeDelta: {x: 1800, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &347556812
@@ -2807,8 +2807,6 @@ MonoBehaviour:
   BossHPImage: {fileID: 347556812}
   startObj: {fileID: 1697432109}
   clearObj: {fileID: 2132639550}
-  startText: {fileID: 1363918778}
-  clearText: {fileID: 157017352}
 --- !u!4 &1232347047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7827295162416520105, guid: 38310063048f6f94e80d9a7ba403bd19,
@@ -6047,7 +6045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 80, y: 0}
   m_SizeDelta: {x: 1800, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2054829476
